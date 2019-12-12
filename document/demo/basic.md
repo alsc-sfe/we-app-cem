@@ -6,7 +6,7 @@ title: demo1
 PC模板
 
 ````jsx
-import cem from "@saasfe/we-app-cem";
+import cem, { createContext } from "@saasfe/we-app-cem";
 
 // 微应用bcommon
 cem.on('test', function(ev){
@@ -107,6 +107,22 @@ cem.trackShareDataOnce('mod2', (mod2) => {
 cem.shareData({
   mod2: 'hello mod2',
 });
+
+const { Provider, Consumer } = createContext(null, 'test');
+
+ReactDOM.render(
+  <Provider value={1}>
+    <Consumer>
+    {
+      (v) => {
+        console.log('context consumer', v);
+        return null;
+      }
+    }
+    </Consumer>
+  </Provider>,
+  mountNode,
+);
 
 function log(msg, ev) {
   typeof ev === 'object' ?

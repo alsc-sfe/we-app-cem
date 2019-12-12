@@ -7,6 +7,7 @@
  */
 import has from 'lodash-es/has';
 import get from 'lodash-es/get';
+import isEqual from 'lodash-es/isEqual';
 import { GLOBAL_NAMESPACE, MICROAPP_NAMESPACE, cems,
   callbackMap, ranCustomEventBody, customEventListeners, SHARE_DATA_EVENT } from './const';
 import { InstantObj, OnlyData, DataCallback, EventCallback, EvCallback, TriggerOpts, DataPath } from './types';
@@ -245,7 +246,7 @@ class CustomEventManager {
 
     try {
       // 数据无变化不触发变更事件
-      if (JSON.stringify(prevData) === JSON.stringify(currentData)) {
+      if (isEqual(prevData, currentData)) {
         return;
       }
 

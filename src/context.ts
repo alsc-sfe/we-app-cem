@@ -32,7 +32,7 @@ export default function createContext<T>(defaultValue: T, contextName: string) {
     Consumer: (props: ConsumerProps<T>) => {
       const { children } = props;
 
-      const [config, setConfig] = useState<T>(null);
+      const [config, setConfig] = useState<T>();
 
       useEffect(() => {
         cem.trackShareDataOnce(id, (cfg: T) => {
