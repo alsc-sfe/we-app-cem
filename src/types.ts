@@ -1,5 +1,7 @@
+export type DataPath = string | symbol;
+
 export interface OnlyData {
-  dataPath: string;
+  dataPath: DataPath;
 }
 export interface InstantObj {
   instant?: boolean;
@@ -27,3 +29,7 @@ export interface EvCallback {
 }
 
 export type DataCallback = (params: any) => void;
+
+export interface TriggerOpts {
+  silent: boolean;
+}
