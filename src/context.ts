@@ -10,8 +10,8 @@ export interface ConsumerProps<T> {
   children: (params: T) => React.ReactElement;
 }
 
-export default function createContext<T>(defaultValue: T, contextName: string) {
-  const id = Symbol.for(contextName);
+export default function createContext<T>(defaultValue: T, contextName: string, noSymbol: boolean = false) {
+  const id = noSymbol ? contextName : Symbol.for(contextName);
 
   if (defaultValue) {
     cem.shareData({

@@ -115,8 +115,17 @@ ReactDOM.render(
     <Consumer>
     {
       (v) => {
-        console.log('context consumer', v);
-        return null;
+        console.log('context consumer v', v);
+        return (
+          <Consumer>
+          {
+            (v1) => {
+              console.log('context consumer v1', v1);
+              return null;
+            }
+          }
+          </Consumer>
+        );
       }
     }
     </Consumer>
