@@ -108,7 +108,14 @@ cem.shareData({
   mod2: 'hello mod2',
 });
 
-const { Provider, Consumer } = createContext(null, 'test');
+cem.getShareData().then((config) => {
+  console.log('cem.getShareData', config);
+});
+cem.getShareData('shopId').then((config) => {
+  console.log('cem.getShareData shopId', config);
+});
+
+const { Provider, Consumer, consume } = createContext(null, 'test');
 
 ReactDOM.render(
   <Provider value={1}>
@@ -132,6 +139,10 @@ ReactDOM.render(
   </Provider>,
   mountNode,
 );
+
+consume((v2) => {
+  console.log('context consume v2', v2);
+});
 
 function log(msg, ev) {
   typeof ev === 'object' ?

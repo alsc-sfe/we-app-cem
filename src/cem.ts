@@ -64,12 +64,14 @@ class CustomEventManager {
     const hasRanCustomEvent = eventType in ranCustomEventBody;
 
     if (once && instant && hasRanCustomEvent) {
-      triggerInstant(eventType, cb, {
+      const called = triggerInstant(eventType, cb, {
         instant,
         once,
         onlyData: onlyData as OnlyData,
       });
-      return;
+      if (called) {
+        return;
+      }
     }
 
     let callback: EvCallback;
@@ -255,6 +257,22 @@ class CustomEventManager {
       console.log(error);
     }
   }
+
+  getShareData = (dataPath: DataPath, instantObj: InstantObj = { instant: true }) => {
+    return new Promise((resolve) => {
+      const callback = (data: any) => {
+        if (data !== undefined) {
+          resolve(data);
+          this.stopTrackShareData(callback);
+        }
+      };
+      const params: any[] = [callback, instantObj];
+      if (dataPath) {
+        params.unshift(dataPath);
+      }
+      this.trackShareData.apply(this, params);
+    });
+  };
 }
 
 declare global {
@@ -305,6 +323,8 @@ function triggerInstant(eventType: string, cb: EventCallback, instantObj: Instan
 
   let val = detail;
 
+  let called = false;
+
   if (onlyData) {
     const { dataPath } = onlyData as OnlyData;
 
@@ -313,12 +333,17 @@ function triggerInstant(eventType: string, cb: EventCallback, instantObj: Instan
     if (dataPath) {
       if (has(val, dataPath)) {
         val = get(val, dataPath);
+        called = true;
         cb(val);
       }
     } else {
+      called = true;
       cb(val);
     }
   } else {
+    called = true;
     cb(val);
   }
+
+  return called;
 }

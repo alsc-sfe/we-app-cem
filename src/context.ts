@@ -25,7 +25,7 @@ export default function createContext<T>(defaultValue: T, contextName: string, n
 
       cem.shareData({
         [id]: value,
-      }, { silent: true });
+      });
 
       return children;
     },
@@ -41,6 +41,11 @@ export default function createContext<T>(defaultValue: T, contextName: string, n
       }, []);
 
       return children(config);
+    },
+    consume: (callback: (config: T) => any) => {
+      cem.trackShareDataOnce(id, (cfg: T) => {
+        callback(cfg);
+      });
     },
   };
 }
