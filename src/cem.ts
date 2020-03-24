@@ -258,7 +258,7 @@ class CustomEventManager {
     }
   }
 
-  getShareData = (dataPath: DataPath, instantObj: InstantObj = { instant: true }) => {
+  getShareData = (dataPath?: DataPath, instantObj: InstantObj = { instant: true }) => {
     return new Promise((resolve) => {
       const callback = (data: any) => {
         if (data !== undefined) {
