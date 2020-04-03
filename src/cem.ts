@@ -11,6 +11,7 @@ import isEqual from 'lodash-es/isEqual';
 import { GLOBAL_NAMESPACE, MICROAPP_NAMESPACE, cems,
   callbackMap, ranCustomEventBody, customEventListeners, SHARE_DATA_EVENT } from './const';
 import { InstantObj, OnlyData, DataCallback, EventCallback, EvCallback, TriggerOpts, DataPath } from './types';
+import timeout from './timeout';
 
 class CustomEventManager {
   _domain: string;
@@ -259,7 +260,7 @@ class CustomEventManager {
   }
 
   getShareData = (dataPath?: DataPath, instantObj: InstantObj = { instant: true }) => {
-    return new Promise((resolve) => {
+    const p = new Promise((resolve) => {
       const callback = (data: any) => {
         if (data !== undefined) {
           resolve(data);
@@ -272,6 +273,7 @@ class CustomEventManager {
       }
       this.trackShareData.apply(this, params);
     });
+    return timeout(p, 100, `getShareData for '${dataPath?.toString?.()}' timeout in 100ms`);
   };
 }
 
