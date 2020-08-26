@@ -223,7 +223,7 @@ class CustomEventManager {
     });
   }
 
-  trackShareDataOnce(dataPath: DataPath | DataCallback, cb: DataCallback) {
+  trackShareDataOnce(dataPath: DataPath | DataCallback, cb?: DataCallback) {
     this.trackShareData(dataPath, cb, {
       once: true,
     });
