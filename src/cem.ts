@@ -203,7 +203,7 @@ class CustomEventManager {
     return this;
   }
 
-  trackShareData(dataPath: DataPath | DataCallback, cb: InstantObj|DataCallback, instantObj: InstantObj = { instant: true }) {
+  trackShareData(dataPath: DataPath | DataCallback, cb?: InstantObj|DataCallback, instantObj: InstantObj = { instant: true }) {
     let callback = cb as DataCallback;
     if (typeof dataPath === 'function') {
       callback = dataPath as DataCallback;
