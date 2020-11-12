@@ -191,14 +191,18 @@ class CustomEventManager {
       prevData: prevDetail.data,
     };
 
-    if (!(opts && opts.silent)) {
-      const ev = new CustomEvent(eventType, {
-        detail,
-      });
-      window.dispatchEvent(ev);
-    }
-
     ranCustomEventBody[eventType] = detail;
+
+    if (!(opts && opts.silent)) {
+      try {
+        const ev = new CustomEvent(eventType, {
+          detail,
+        });
+        window.dispatchEvent(ev);
+      } catch (error) {
+        console.log('trigger error', eventType, error);
+      }
+    }
 
     return this;
   }
@@ -255,7 +259,7 @@ class CustomEventManager {
 
       this.trigger(SHARE_DATA_EVENT, currentData, opts);
     } catch (error) {
-      console.log(error);
+      console.log('shareData error', error);
     }
   }
 
